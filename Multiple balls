@@ -1,0 +1,87 @@
+#import turtle
+import turtle
+import random
+import time
+turtle.getscreen()
+turtle.bgcolor("black")
+turtle.title("Bouncing ball")
+turtle.tracer(0)
+#make multiple balls
+
+balls = []
+
+for _ in range(10):
+    balls.append(turtle.Turtle())
+
+#set color of ball
+colors = ["red","blue","green","orange","yellow", "purple"]
+shapes = ["circle","square","triangle"]
+    
+#make the ball and put it in the middle of the screen
+for ball in balls:
+
+    ball.shape(random.choice(shapes))
+    ball.color(random.choice(colors))
+    ball.penup()
+    ball.speed(0)
+    x = random.randint(-200, 200)
+    ball.goto(x, 300)
+    
+
+for ball in balls:
+
+    dx = 10
+    wall1 = 200
+    wall2 = -200
+    ground = -350
+    t = 0
+        
+        #big While true loop 
+
+            #intial fall
+    falling = True
+    while falling:
+        ball.sety(300+(((-0.981 * t**2)/2)))
+        ball.setx(ball.xcor() + dx)
+        turtle.update()
+        time.sleep(0.01)
+        #check for wall
+        if ball.xcor() > wall1:
+            dx *= -1
+
+        if ball.xcor() < wall2:
+            dx *= -1
+
+          #check for ground
+        if ball.ycor() < ground:
+           falling = False
+        vf = 0.981 * t 
+        t += 1
+            #initial fall completed
+    v = vf
+    t = 0
+        #bouncing
+    bouncing = True
+    while bouncing:
+
+            ball.sety((v * t - (0.981 * t **2)) + ground)
+            ball.setx(ball.xcor() + dx)
+            turtle.update()
+            time.sleep(0.01)
+            #check for wall
+            if ball.xcor() > wall1:
+                dx *= -1
+
+            if ball.xcor() < wall2:
+                dx *= -1
+
+            #check if hit ground
+            if ball.ycor() < ground:
+                v = v * 0.82
+                if v < 0.981:
+                    bouncing = False
+
+                t=0
+        
+    
+            t += 1
